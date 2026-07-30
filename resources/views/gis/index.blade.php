@@ -35,7 +35,6 @@
 @endphp
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
     .hp-section {
         max-width: 1440px;
@@ -563,116 +562,6 @@
     .map-preview-wrap #homeMap { width: 100%; height: 100%; position: absolute; inset: 0; }
     @media (max-width: 768px) { .map-preview-wrap { height: 340px; } }
 
-    .modal-overlay {
-        position: fixed; inset: 0; z-index: 3000;
-        background: rgba(15,23,42,0.55);
-        backdrop-filter: blur(8px);
-        display: flex; align-items: center; justify-content: center;
-        padding: 1.5rem;
-        opacity: 0; pointer-events: none;
-        transition: opacity 0.35s ease;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal-box {
-        background: #fff; border-radius: 20px;
-        max-width: 640px; width: 100%;
-        max-height: 90vh; overflow-y: auto;
-        box-shadow: 0 24px 80px rgba(0,0,0,0.25);
-        transform: scale(0.92) translateY(20px);
-        transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    .modal-overlay.open .modal-box { transform: scale(1) translateY(0); }
-    .modal-box::-webkit-scrollbar { width: 3px; }
-    .modal-box::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
-    .modal-header {
-        position: relative; width: 100%;
-        aspect-ratio: 16 / 9; overflow: hidden;
-        background: var(--bg);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 3rem; color: #cbd5e1;
-    }
-    .modal-header img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-    .modal-header .modal-close {
-        position: absolute; top: 12px; right: 12px;
-        width: 32px; height: 32px; border-radius: 50%;
-        background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
-        border: none; color: #fff; font-size: 0.8rem;
-        cursor: pointer; display: flex; align-items: center; justify-content: center;
-        transition: background 0.2s;
-    }
-    .modal-header .modal-close:hover { background: rgba(0,0,0,0.7); }
-
-    .modal-header .swiper { z-index: 2; }
-    .modal-header .swiper .swiper-slide {
-        display: flex; align-items: center; justify-content: center;
-        background: var(--bg);
-    }
-    .modal-header .swiper .swiper-slide img {
-        width: 100%; height: 100%; object-fit: cover;
-    }
-    .modal-header .swiper-pagination-bullet {
-        background: rgba(255,255,255,0.5);
-        opacity: 1;
-    }
-    .modal-header .swiper-pagination-bullet-active {
-        background: #fff;
-    }
-    .swiper-btn {
-        position: absolute; top: 50%; transform: translateY(-50%);
-        z-index: 10; width: 32px; height: 32px; border-radius: 50%;
-        background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
-        border: none; color: #fff; font-size: 0.7rem;
-        cursor: pointer; display: none; align-items: center; justify-content: center;
-        transition: background 0.2s;
-    }
-    .swiper-btn:hover { background: rgba(0,0,0,0.6); }
-    .swiper-btn-prev { left: 10px; }
-    .swiper-btn-next { right: 10px; }
-    .swiper-btn.show { display: flex; }
-    .modal-header .swiper-pagination { display: none; }
-    .modal-header .swiper-pagination.show { display: block; }
-    .modal-body { padding: 1.25rem 1.5rem 1.5rem; }
-    .modal-body .m-title {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 1.25rem; font-weight: 800;
-        color: var(--primary); margin-bottom: 0.4rem;
-    }
-    .modal-body .m-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.8rem; }
-    .modal-body .m-tag {
-        font-size: 0.6rem; font-weight: 700; padding: 3px 10px;
-        border-radius: 100px; text-transform: uppercase; letter-spacing: 0.4px;
-    }
-    .m-tag.aset_desa { background: #ccfbf1; color: #0f766e; }
-    .m-tag.fasilitas_publik { background: #e2e8f0; color: #475569; }
-    .m-tag.kategori { background: rgba(13,148,136,0.08); color: var(--accent); border: 1px solid rgba(13,148,136,0.15); }
-    .modal-body .m-desc {
-        font-size: 0.82rem; color: var(--text-muted);
-        line-height: 1.7; margin-bottom: 1rem;
-    }
-    .modal-body .m-info {
-        display: grid; grid-template-columns: auto 1fr;
-        gap: 6px 12px; font-size: 0.78rem; margin-bottom: 1.25rem;
-    }
-    .modal-body .m-info .m-label { color: #94a3b8; font-weight: 600; }
-    .modal-body .m-info .m-value { color: var(--text); font-weight: 500; }
-    .modal-body .m-info .m-value i { color: var(--accent); width: 14px; margin-right: 3px; }
-    .modal-body .m-cta {
-        display: inline-flex; align-items: center; gap: 8px;
-        padding: 0.7rem 1.5rem; border-radius: 12px;
-        background: var(--accent); color: #fff; font-weight: 700;
-        font-size: 0.8rem; font-family: 'Plus Jakarta Sans', sans-serif;
-        transition: all 0.25s; border: none; cursor: pointer;
-    }
-    .modal-body .m-cta:hover {
-        background: #0f766e;
-        box-shadow: 0 4px 20px rgba(13,148,136,0.3);
-        transform: translateY(-1px);
-    }
-    @media (max-width: 768px) {
-        .modal-box { max-width: 100%; margin: 0.5rem; border-radius: 14px; }
-        .modal-body { padding: 1rem 1.25rem 1.25rem; }
-        .modal-body .m-title { font-size: 1.05rem; }
-    }
 </style>
 @endpush
 
@@ -938,36 +827,83 @@
         </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     MODAL (Detail Fasilitas)
-     ════════════════════════════════════════════════════ -->
-<div class="modal-overlay" id="facilityModal" onclick="if(event.target===this)closeModal()">
-    <div class="modal-box">
-        <div class="modal-header" id="modalHeader">
-            <div class="swiper" id="photoSwiper" style="width:100%;height:100%;position:absolute;inset:0;">
-                <div class="swiper-wrapper" id="photoSwiperWrapper"></div>
-                <div class="swiper-pagination" style="bottom:8px !important;"></div>
+<div id="facilityModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-60 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+    <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-all">
+
+        <!-- Header Modal -->
+        <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
+            <div class="flex items-center gap-3 min-w-0">
+                <span id="modalIcon" class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" style="display:none;"></span>
+                <h3 id="modalTitle" class="text-lg font-bold text-gray-800 truncate">Detail Fasilitas</h3>
             </div>
-            <div id="modalPlaceholder" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:3rem;color:#cbd5e1;position:relative;z-index:1;"><i class="fas fa-image"></i></div>
-            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            <button class="swiper-btn swiper-btn-prev" id="photoPrev"><i class="fas fa-chevron-left"></i></button>
-            <button class="swiper-btn swiper-btn-next" id="photoNext"><i class="fas fa-chevron-right"></i></button>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full p-1.5 transition flex-shrink-0 ml-2">&times;</button>
         </div>
-        <div class="modal-body" id="modalBody">
-            <div class="m-title" id="modalTitle"></div>
-            <div class="m-tags" id="modalTags"></div>
-            <div class="m-desc" id="modalDesc"></div>
-            <div class="m-info" id="modalInfo"></div>
-            <a class="m-cta" id="modalCta" href="#" target="_blank" rel="noopener"><i class="fas fa-directions"></i> Buka Petunjuk Arah di Google Maps</a>
+
+        <!-- Body -->
+        <div class="relative max-h-[75vh] overflow-y-auto">
+
+            <!-- Image Carousel -->
+            <div id="carouselContainer" class="relative w-full h-64 bg-gray-100 hidden">
+                <div id="carouselSlides" class="flex transition-transform duration-300 ease-in-out h-full"></div>
+                <button id="prevBtn" onclick="moveSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center transition z-10 hidden"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+                <button id="nextBtn" onclick="moveSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center transition z-10 hidden"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+                <div id="carouselDots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10"></div>
+            </div>
+            <div id="modalPlaceholder" class="w-full h-64 bg-gray-100 flex items-center justify-center text-5xl text-gray-300 hidden"><i class="fas fa-image"></i></div>
+
+            <!-- Informasi -->
+            <div class="p-6 space-y-5">
+                <!-- Kategori & Status -->
+                <div class="flex flex-wrap items-center gap-2" id="modalTags"></div>
+
+                <!-- Alamat -->
+                <div>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Alamat</span>
+                    <p id="modalAddress" class="mt-1 text-sm text-gray-700">-</p>
+                </div>
+
+                <!-- Deskripsi -->
+                <div>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deskripsi</span>
+                    <p id="modalDesc" class="mt-1 text-sm text-gray-600 leading-relaxed whitespace-pre-line">-</p>
+                </div>
+
+                <!-- Info Grid -->
+                <div class="grid grid-cols-2 gap-4 pt-2 border-t border-gray-100">
+                    <div>
+                        <span class="text-xs text-gray-400 block">Sektor</span>
+                        <span id="modalSektor" class="text-sm font-medium text-gray-700">-</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-400 block">Koordinat</span>
+                        <span id="modalKoordinat" class="text-sm font-medium text-gray-700">-</span>
+                    </div>
+                    <div class="col-span-2">
+                        <span class="text-xs text-gray-400 block">Jam Layanan</span>
+                        <span id="modalJam" class="text-sm font-medium text-gray-700">Senin - Jumat, 08:00 - 16:00 WITA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-3">
+            <a id="modalCta" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg> Buka Petunjuk Arah</a>
+            <button onclick="closeModal()" class="px-4 py-2 bg-white border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition">Tutup</button>
         </div>
     </div>
 </div>
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     var map, facilities, kategoriList, jenisList, markerMap = {};
+    var slideIdx = 0, slideTotal = 0;
+
+    function getIconForCategory(kat) {
+        var icons = { 'kantor_desa': 'fa-landmark', 'sekolah': 'fa-school', 'gereja': 'fa-church', 'posyandu': 'fa-hospital-alt', 'lapangan': 'fa-futbol', 'balai_desa': 'fa-home', 'tempat_ibadah': 'fa-mosque' };
+        return icons[kat] || 'fa-map-pin';
+    }
 
 document.addEventListener('DOMContentLoaded', function () {
     map = L.map('homeMap', {
@@ -1009,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     '<div style="padding:0;text-align:center;">' +
                     '<h4 style="margin:0.75rem 0 2px;font-size:0.85rem;font-weight:700;color:#1e293b;">' + f.nama + '</h4>' +
                     (f.alamat ? '<p style="margin:0 0 0.5rem;font-size:0.68rem;color:#64748b;">' + f.alamat + '</p>' : '') +
-                    '<button onclick="openModal(' + f.id + ')" style="margin-bottom:0.75rem;padding:0.3rem 0.9rem;background:#0D9488;color:#fff;border:none;border-radius:8px;font-size:0.7rem;font-weight:600;cursor:pointer;">Lihat Detail</button>' +
+                    '<button onclick="openModal(' + f.id + ')" style="margin-bottom:0.75rem;padding:0.3rem 0.8rem;background:#0D9488;color:#fff;border:none;border-radius:6px;font-size:0.68rem;font-weight:600;cursor:pointer;">Lihat Detail</button>' +
                     '</div>',
                     { maxWidth: 260, className: 'custom-popup' }
                 );
@@ -1028,82 +964,84 @@ document.addEventListener('DOMContentLoaded', function () {
         var f = facilities.find(function(item) { return item.id === id; });
         if (!f) return;
 
-        var header = document.getElementById('modalHeader');
-        var placeholder = document.getElementById('modalPlaceholder');
-        var swiperEl = document.getElementById('photoSwiper');
-        var wrapper = document.getElementById('photoSwiperWrapper');
-        if (!header || !placeholder || !swiperEl || !wrapper) return;
+        // Title
+        document.getElementById('modalTitle').textContent = f.nama || 'Detail Fasilitas';
 
-        var pagination = swiperEl.querySelector('.swiper-pagination');
-        var prevBtn = document.getElementById('photoPrev');
-        var nextBtn = document.getElementById('photoNext');
+        // Icon
+        var iconEl = document.getElementById('modalIcon');
+        var bgClass = f.kategori === 'lapangan' ? '#F59E0B' : '#0D9488';
+        iconEl.style.display = 'inline-flex';
+        iconEl.style.background = bgClass;
+        iconEl.innerHTML = '<i class="fas ' + getIconForCategory(f.kategori) + '"></i>';
 
-        wrapper.innerHTML = '';
-
-        var photos = f.photos || [];
-        var validPhotos = photos.filter(function(p) { return p.photo_url; });
-
-        if (validPhotos.length) {
-            placeholder.style.display = 'none';
-            swiperEl.style.display = 'block';
-            validPhotos.forEach(function(p) {
-                var slide = document.createElement('div');
-                slide.className = 'swiper-slide';
-                slide.innerHTML = '<img src="' + p.photo_url + '" alt="" onerror="this.parentElement.innerHTML=\'\'">';
-                wrapper.appendChild(slide);
-            });
-            if (validPhotos.length > 1) {
-                if (pagination) pagination.classList.add('show');
-                if (prevBtn) prevBtn.classList.add('show');
-                if (nextBtn) nextBtn.classList.add('show');
-            } else {
-                if (pagination) pagination.classList.remove('show');
-                if (prevBtn) prevBtn.classList.remove('show');
-                if (nextBtn) nextBtn.classList.remove('show');
-            }
-            if (window._photoSwiper) {
-                try { window._photoSwiper.destroy(true, true); } catch(e) {}
-                window._photoSwiper = null;
-            }
-            if (typeof Swiper !== 'undefined') {
-                try {
-                    window._photoSwiper = new Swiper(swiperEl, {
-                        loop: validPhotos.length > 1,
-                        pagination: pagination ? { el: pagination, clickable: true } : false,
-                        navigation: { prevEl: prevBtn, nextEl: nextBtn },
-                    });
-                } catch(e) { console.warn('Swiper init failed', e); }
-            }
-        } else {
-            swiperEl.style.display = 'none';
-            if (pagination) pagination.classList.remove('show');
-            if (prevBtn) prevBtn.classList.remove('show');
-            if (nextBtn) nextBtn.classList.remove('show');
-            placeholder.style.display = 'flex';
-            placeholder.innerHTML = '<i class="fas ' + getIconForCategory(f.kategori) + '"></i>';
-        }
-
-        document.getElementById('modalTitle').textContent = f.nama;
+        // Tags
         var jenis = jenisList[f.kategori] || 'fasilitas_publik';
         var jenisLabel = jenis === 'aset_desa' ? 'Aset Desa' : 'Fasilitas Publik';
         var kategoriLabel = kategoriList[f.kategori] || f.kategori;
         document.getElementById('modalTags').innerHTML =
-            '<span class="m-tag ' + jenis + '">' + jenisLabel + '</span>' +
-            '<span class="m-tag kategori">' + kategoriLabel + '</span>';
+            '<span class="px-2.5 py-1 text-xs font-semibold rounded-full ' + (jenis === 'aset_desa' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800') + '">' + jenisLabel + '</span>' +
+            '<span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">' + kategoriLabel + '</span>';
+
+        // Address
+        document.getElementById('modalAddress').textContent = f.alamat || 'Desa Nekmese, Kec. Amarasi Selatan';
+
+        // Description
         document.getElementById('modalDesc').textContent = f.deskripsi || 'Belum ada deskripsi untuk fasilitas ini.';
 
+        // Info grid
         var sektor = @json($sektorList);
         var sektorName = sektor[f.kategori] || 'Fasilitas Umum';
-        document.getElementById('modalInfo').innerHTML =
-            '<span class="m-label">Alamat</span><span class="m-value"><i class="fas fa-map-marker-alt"></i>' + (f.alamat || 'Desa Nekmese, Kec. Amarasi Selatan') + '</span>' +
-            '<span class="m-label">Jam Layanan</span><span class="m-value"><i class="fas fa-clock"></i>Senin - Jumat, 08:00 - 16:00 WITA</span>' +
-            '<span class="m-label">Sektor</span><span class="m-value"><i class="fas fa-tag"></i>' + sektorName + '</span>' +
-            '<span class="m-label">Koordinat</span><span class="m-value"><i class="fas fa-globe"></i>' + f.latitude.toFixed(5) + ', ' + f.longitude.toFixed(5) + '</span>';
+        document.getElementById('modalSektor').textContent = sektorName;
+        document.getElementById('modalKoordinat').textContent = f.latitude.toFixed(5) + ', ' + f.longitude.toFixed(5);
+        document.getElementById('modalJam').textContent = 'Senin - Jumat, 08:00 - 16:00 WITA';
 
+        // Google Maps CTA
         var navLink = 'https://www.google.com/maps/dir/?api=1&destination=' + f.latitude + ',' + f.longitude;
         document.getElementById('modalCta').href = navLink;
 
-        document.getElementById('facilityModal').classList.add('open');
+        // Carousel
+        var container = document.getElementById('carouselContainer');
+        var slidesEl = document.getElementById('carouselSlides');
+        var dotsEl = document.getElementById('carouselDots');
+        var placeholder = document.getElementById('modalPlaceholder');
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+
+        slidesEl.innerHTML = '';
+        dotsEl.innerHTML = '';
+        slideIdx = 0;
+
+        var photos = f.photos || [];
+        var validPhotos = photos.filter(function(p) { return p.photo_url; });
+
+        if (validPhotos.length > 0) {
+            container.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            slideTotal = validPhotos.length;
+
+            validPhotos.forEach(function(p, idx) {
+                var img = document.createElement('img');
+                img.src = p.photo_url;
+                img.className = 'w-full h-full object-cover flex-shrink-0';
+                img.alt = '';
+                slidesEl.appendChild(img);
+
+                var dot = document.createElement('button');
+                dot.className = 'w-2 h-2 rounded-full ' + (idx === 0 ? 'bg-white' : 'bg-white/50');
+                dot.setAttribute('data-index', idx);
+                dot.onclick = function() { goToSlide(parseInt(this.getAttribute('data-index'))); };
+                dotsEl.appendChild(dot);
+            });
+
+            prevBtn.classList.toggle('hidden', slideTotal <= 1);
+            nextBtn.classList.toggle('hidden', slideTotal <= 1);
+        } else {
+            container.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            placeholder.innerHTML = '<i class="fas ' + getIconForCategory(f.kategori) + '"></i>';
+        }
+
+        document.getElementById('facilityModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         focusMarker(id);
     }
@@ -1117,8 +1055,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function closeModal() {
-        document.getElementById('facilityModal').classList.remove('open');
+        document.getElementById('facilityModal').classList.add('hidden');
         document.body.style.overflow = '';
+    }
+
+    function moveSlide(dir) {
+        goToSlide((slideIdx + dir + slideTotal) % slideTotal);
+    }
+
+    function goToSlide(idx) {
+        slideIdx = idx;
+        document.getElementById('carouselSlides').style.transform = 'translateX(-' + (idx * 100) + '%)';
+        var dots = document.getElementById('carouselDots').children;
+        Array.from(dots).forEach(function(d, i) {
+            d.className = 'w-2 h-2 rounded-full ' + (i === idx ? 'bg-white' : 'bg-white/50');
+        });
     }
 
     document.addEventListener('keydown', function(e) {
