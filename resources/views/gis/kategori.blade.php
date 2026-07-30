@@ -772,7 +772,7 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    var map, markerMap, allMarkers;
+    var map, facilities, kategoriList, jenisList, markerMap, allMarkers;
 
 document.addEventListener('DOMContentLoaded', function () {
     map = L.map('catMap', {
@@ -786,7 +786,9 @@ document.addEventListener('DOMContentLoaded', function () {
         maxZoom: 18,
     }).addTo(map);
 
-    const facilities = @json($facilities);
+    facilities = @json($facilities);
+    kategoriList = @json($kategoriList);
+    jenisList = @json($jenisList);
     markerMap = {};
     allMarkers = [];
 
@@ -830,6 +832,7 @@ document.addEventListener('DOMContentLoaded', function () {
         map.invalidateSize();
     }, 300);
 });
+    function filterMapMarkers(kat) {
         document.querySelectorAll('#mapFilterRow .filter-pill').forEach(function(b) {
             b.classList.toggle('active', b.getAttribute('data-kat') === kat);
         });
@@ -925,6 +928,14 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('facilityModal').classList.add('open');
         document.body.style.overflow = 'hidden';
         focusMarker(id);
+    }
+
+    function focusMarker(id) {
+        var marker = markerMap[id];
+        if (marker) {
+            map.setView(marker.getLatLng(), 17);
+            marker.openPopup();
+        }
     }
 
     function closeModal() {

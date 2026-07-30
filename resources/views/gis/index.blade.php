@@ -967,8 +967,10 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    var map, facilities, kategoriList, jenisList, markerMap = {};
+
 document.addEventListener('DOMContentLoaded', function () {
-    const map = L.map('homeMap', {
+    map = L.map('homeMap', {
         center: [-10.193000, 123.715000],
         zoom: 15,
         zoomControl: true,
@@ -979,7 +981,9 @@ document.addEventListener('DOMContentLoaded', function () {
         maxZoom: 18,
     }).addTo(map);
 
-    const facilities = @json($facilities);
+    facilities = @json($facilities);
+    kategoriList = @json($kategoriList);
+    jenisList = @json($jenisList);
 
     if (typeof facilities !== 'undefined' && Array.isArray(facilities)) {
         facilities.forEach(f => {
@@ -1011,6 +1015,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
             marker._facilityId = f.id;
+            markerMap[f.id] = marker;
         });
     }
 
@@ -1101,6 +1106,14 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('facilityModal').classList.add('open');
         document.body.style.overflow = 'hidden';
         focusMarker(id);
+    }
+
+    function focusMarker(id) {
+        var marker = markerMap[id];
+        if (marker) {
+            map.setView(marker.getLatLng(), 17);
+            marker.openPopup();
+        }
     }
 
     function closeModal() {
