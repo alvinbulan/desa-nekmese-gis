@@ -44,7 +44,11 @@ class FacilityController extends Controller
                 ->orWhere('nama', 'LIKE', '%Sekolah Menengah Atas%');
         })->count();
 
-        return view('gis.index', compact('facilities', 'kategoriList', 'jenisList', 'sektorList', 'heroBg', 'heroTs', 'sectionHeaders', 'asetMainImage', 'asetSubImage', 'totalSD', 'totalSMP', 'totalSMA'));
+        $totalAset = Facility::active()->count();
+        $totalTerintegrasi = Facility::active()->where('latitude', '!=', 0)->where('longitude', '!=', 0)->count();
+        $persenTerintegrasi = $totalAset > 0 ? round(($totalTerintegrasi / $totalAset) * 100) : 100;
+
+        return view('gis.index', compact('facilities', 'kategoriList', 'jenisList', 'sektorList', 'heroBg', 'heroTs', 'sectionHeaders', 'asetMainImage', 'asetSubImage', 'totalSD', 'totalSMP', 'totalSMA', 'totalAset', 'totalTerintegrasi', 'persenTerintegrasi'));
     }
 
     public function semuaFasilitas()

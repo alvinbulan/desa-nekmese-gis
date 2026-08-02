@@ -650,11 +650,11 @@
                     <a href="/aset-desa" class="pill-cta" style="margin:0;">Jelajahi Aset Desa <i class="fas fa-arrow-right"></i></a>
                     <div class="aset-stats">
                         <div class="as-item">
-                            <div class="as-num">10+</div>
+                            <div class="as-num">{{ $totalAset ?? 0 }}+</div>
                             <div class="as-lbl">Aset Terdata</div>
                         </div>
                         <div class="as-item">
-                            <div class="as-num">100%</div>
+                            <div class="as-num">{{ $persenTerintegrasi ?? 100 }}%</div>
                             <div class="as-lbl">Terintegrasi</div>
                         </div>
                     </div>
