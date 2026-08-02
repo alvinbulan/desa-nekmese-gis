@@ -885,6 +885,19 @@
         cursor: pointer; transition: all 0.2s;
     }
     .btnGhost:hover { background: #f1f5f9; }
+    .popup-detail-btn {
+        margin-bottom: 0.75rem;
+        padding: 0.3rem 0.8rem;
+        background: #0D9488;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .popup-detail-btn:hover { background: #0f766e; }
     @media (max-width: 600px) {
         .fmx-box { border-radius: 14px; }
         .f-grid { grid-template-columns: 1fr; }
@@ -945,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     '<div style="padding:0;text-align:center;">' +
                     '<h4 style="margin:0.75rem 0 2px;font-size:0.85rem;font-weight:700;color:#1e293b;">' + f.nama + '</h4>' +
                     (f.alamat ? '<p style="margin:0 0 0.5rem;font-size:0.68rem;color:#64748b;">' + f.alamat + '</p>' : '') +
-                    '<button onclick="openModal(' + f.id + ')" style="margin-bottom:0.75rem;padding:0.3rem 0.8rem;background:#0D9488;color:#fff;border:none;border-radius:6px;font-size:0.68rem;font-weight:600;cursor:pointer;">Lihat Detail</button>' +
+                    '<button type="button" data-detail-id="' + f.id + '" class="popup-detail-btn" onclick="event.stopPropagation();window.openModal(' + f.id + ')">Lihat Detail</button>' +
                     '</div>',
                     { maxWidth: 260, className: 'custom-popup' }
                 );
@@ -1084,6 +1097,22 @@ document.addEventListener('DOMContentLoaded', function () {
             d.className = 'carDot' + (i === idx ? ' active' : '');
         });
     }
+
+    window.openModal = function (id) { openModal(id); };
+    window.openDetailModal = function (data) {
+        if (typeof data === 'string') { try { data = JSON.parse(data); } catch (e) {} }
+        if (data && typeof data === 'object' && 'id' in data) { openModal(data.id); }
+        else if (typeof data === 'number') { openModal(data); }
+    };
+
+    document.addEventListener('click', function (e) {
+        var btn = e.target && e.target.closest ? e.target.closest('.popup-detail-btn') : null;
+        if (btn && btn.getAttribute('data-detail-id')) {
+            e.preventDefault();
+            e.stopPropagation();
+            openModal(parseInt(btn.getAttribute('data-detail-id'), 10));
+        }
+    });
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') closeModal();
