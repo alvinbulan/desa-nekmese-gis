@@ -27,7 +27,24 @@ class FacilityController extends Controller
         $asetSection = AssetSection::first();
         $asetMainImage = $asetSection?->main_image;
         $asetSubImage = $asetSection?->sub_image;
-        return view('gis.index', compact('facilities', 'kategoriList', 'jenisList', 'sektorList', 'heroBg', 'heroTs', 'sectionHeaders', 'asetMainImage', 'asetSubImage'));
+
+        $totalSD = Facility::active()->where(function ($query) {
+            $query->where('nama', 'LIKE', '%SD%')
+                ->orWhere('nama', 'LIKE', '%Sekolah Dasar%');
+        })->count();
+
+        $totalSMP = Facility::active()->where(function ($query) {
+            $query->where('nama', 'LIKE', '%SMP%')
+                ->orWhere('nama', 'LIKE', '%Sekolah Menengah Pertama%');
+        })->count();
+
+        $totalSMA = Facility::active()->where(function ($query) {
+            $query->where('nama', 'LIKE', '%SMA%')
+                ->orWhere('nama', 'LIKE', '%SMK%')
+                ->orWhere('nama', 'LIKE', '%Sekolah Menengah Atas%');
+        })->count();
+
+        return view('gis.index', compact('facilities', 'kategoriList', 'jenisList', 'sektorList', 'heroBg', 'heroTs', 'sectionHeaders', 'asetMainImage', 'asetSubImage', 'totalSD', 'totalSMP', 'totalSMA'));
     }
 
     public function semuaFasilitas()

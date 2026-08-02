@@ -676,18 +676,18 @@
         <div class="pendidikan-stats reveal reveal-delay-2">
             <div class="stats-card">
                 <div class="stat-item">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">PAUD / TK</div>
+                    <div class="stat-number">{{ $totalSD ?? 0 }}</div>
+                    <div class="stat-label">SD</div>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <div class="stat-number">2+</div>
-                    <div class="stat-label">SEKOLAH DASAR</div>
+                    <div class="stat-number">{{ $totalSMP ?? 0 }}</div>
+                    <div class="stat-label">SMP</div>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">TERAKREDITASI</div>
+                    <div class="stat-number">{{ $totalSMA ?? 0 }}</div>
+                    <div class="stat-label">SMA / SMK</div>
                 </div>
             </div>
         </div>
