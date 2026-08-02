@@ -711,66 +711,186 @@
 </section>
 
 <!-- Modal -->
-<div id="facilityModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-60 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
-    <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-all">
+<div id="facilityModal" class="fmx" onclick="if(event.target===this)closeModal()">
+    <div class="fmx-box">
 
         <!-- Header Modal -->
-        <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
-            <div class="flex items-center gap-3 min-w-0">
-                <span id="modalIcon" class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" style="display:none;"></span>
-                <h3 id="modalTitle" class="text-lg font-bold text-gray-800 truncate">Detail Fasilitas</h3>
+        <div class="fmx-head">
+            <div class="fmx-title-row">
+                <span id="modalIcon" class="fmx-ic" style="display:none;"></span>
+                <h3 id="modalTitle" class="fmx-title">Detail Fasilitas</h3>
             </div>
-            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full p-1.5 transition flex-shrink-0 ml-2">&times;</button>
+            <button type="button" onclick="closeModal()" class="fmx-close" aria-label="Tutup">&times;</button>
         </div>
 
         <!-- Body -->
-        <div class="relative max-h-[75vh] overflow-y-auto">
+        <div class="fmx-scroll">
 
             <!-- Image Carousel -->
-            <div id="carouselContainer" class="relative w-full h-64 bg-gray-100 hidden">
-                <div id="carouselSlides" class="flex transition-transform duration-300 ease-in-out h-full"></div>
-                <button id="prevBtn" onclick="moveSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center transition z-10 hidden"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
-                <button id="nextBtn" onclick="moveSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center transition z-10 hidden"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
-                <div id="carouselDots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10"></div>
+            <div id="carouselContainer" class="carousel-wrap">
+                <div id="carouselSlides" class="carousel-track"></div>
+                <button id="prevBtn" type="button" onclick="moveSlide(-1)" class="carArrow prev" aria-label="Sebelumnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg></button>
+                <button id="nextBtn" type="button" onclick="moveSlide(1)" class="carArrow next" aria-label="Berikutnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+                <div id="carouselDots" class="carDots"></div>
             </div>
-            <div id="modalPlaceholder" class="w-full h-64 bg-gray-100 flex items-center justify-center text-5xl text-gray-300 hidden"><i class="fas fa-image"></i></div>
+            <div id="modalPlaceholder" class="placeholderBox"><i class="fas fa-image"></i></div>
 
             <!-- Informasi -->
-            <div class="p-6 space-y-5">
-                <div class="flex flex-wrap items-center gap-2" id="modalTags"></div>
-                <div>
-                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Alamat</span>
-                    <p id="modalAddress" class="mt-1 text-sm text-gray-700">-</p>
+            <div class="fmx-body">
+                <div class="fmx-tags" id="modalTags"></div>
+
+                <div class="fmx-section">
+                    <span class="fmx-label">Alamat</span>
+                    <p id="modalAddress" class="fmx-value">-</p>
                 </div>
-                <div>
-                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deskripsi</span>
-                    <p id="modalDesc" class="mt-1 text-sm text-gray-600 leading-relaxed whitespace-pre-line">-</p>
+
+                <div class="fmx-section">
+                    <span class="fmx-label">Deskripsi</span>
+                    <p id="modalDesc" class="fmx-value">-</p>
                 </div>
-                <div class="grid grid-cols-2 gap-4 pt-2 border-t border-gray-100">
+
+                <div class="f-grid">
                     <div>
-                        <span class="text-xs text-gray-400 block">Sektor</span>
-                        <span id="modalSektor" class="text-sm font-medium text-gray-700">-</span>
+                        <span class="fmx-label">Sektor</span>
+                        <span id="modalSektor" class="fmx-value">-</span>
                     </div>
                     <div>
-                        <span class="text-xs text-gray-400 block">Koordinat</span>
-                        <span id="modalKoordinat" class="text-sm font-medium text-gray-700">-</span>
+                        <span class="fmx-label">Koordinat</span>
+                        <span id="modalKoordinat" class="fmx-value">-</span>
                     </div>
-                    <div class="col-span-2">
-                        <span class="text-xs text-gray-400 block">Jam Layanan</span>
-                        <span id="modalJam" class="text-sm font-medium text-gray-700">Senin - Jumat, 08:00 - 16:00 WITA</span>
+                    <div class="span2">
+                        <span class="fmx-label">Jam Layanan</span>
+                        <span id="modalJam" class="fmx-value">Senin - Jumat, 08:00 - 16:00 WITA</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-3">
-            <a id="modalCta" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg> Buka Petunjuk Arah</a>
-            <button onclick="closeModal()" class="px-4 py-2 bg-white border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition">Tutup</button>
+        <div class="fmx-foot">
+            <a id="modalCta" href="#" target="_blank" rel="noopener" class="btnPrimary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg> Buka Petunjuk Arah</a>
+            <button type="button" onclick="closeModal()" class="btnGhost">Tutup</button>
         </div>
     </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+    .fmx {
+        display: none;
+        position: fixed; inset: 0; z-index: 3000;
+        background: rgba(15,23,42,0.55);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        padding: 1.25rem;
+        overflow-y: auto;
+    }
+    .fmx.open { display: flex; align-items: center; justify-content: center; }
+    .fmx-box {
+        background: #fff; border-radius: 20px;
+        max-width: 640px; width: 100%;
+        max-height: 90vh; overflow: hidden;
+        box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+        display: flex; flex-direction: column;
+    }
+    .fmx-head {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 10px; padding: 16px 24px;
+        border-bottom: 1px solid #eef2f7; flex-shrink: 0;
+    }
+    .fmx-title-row { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .fmx-ic {
+        width: 34px; height: 34px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .fmx-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.12rem; font-weight: 800; color: var(--primary);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .fmx-close {
+        border: none; background: transparent; color: #94a3b8;
+        font-size: 1.6rem; line-height: 1; cursor: pointer;
+        padding: 4px 8px; border-radius: 50%; flex-shrink: 0;
+        transition: background 0.2s, color 0.2s;
+    }
+    .fmx-close:hover { background: #f1f5f9; color: #475569; }
+    .fmx-scroll { overflow-y: auto; flex: 1; }
+
+    .carousel-wrap {
+        position: relative; width: 100%; height: 260px;
+        background: #e2e8f0; display: none;
+    }
+    .carousel-wrap.show { display: block; }
+    .carousel-track { display: flex; height: 100%; transition: transform 0.3s ease; }
+    .carousel-track img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+    .carArrow {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 34px; height: 34px; border-radius: 50%;
+        background: rgba(0,0,0,0.5); border: none; color: #fff;
+        display: none; align-items: center; justify-content: center;
+        cursor: pointer; transition: background 0.2s; z-index: 5;
+    }
+    .carArrow.show { display: flex; }
+    .carArrow:hover { background: rgba(0,0,0,0.65); }
+    .carArrow.prev { left: 12px; }
+    .carArrow.next { right: 12px; }
+    .carDots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
+    .carDot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); border: none; padding: 0; cursor: pointer; }
+    .carDot.active { background: #fff; }
+
+    .placeholderBox {
+        width: 100%; height: 260px; background: #e2e8f0;
+        display: none; align-items: center; justify-content: center;
+        font-size: 3rem; color: #cbd5e1;
+    }
+    .placeholderBox.show { display: flex; }
+
+    .fmx-body { padding: 24px; }
+    .fmx-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .tagPill { font-size: 0.66rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; letter-spacing: 0.4px; text-transform: uppercase; }
+    .tagPill.aset { background: #ccfbf1; color: #0f766e; }
+    .tagPill.publik { background: #e2e8f0; color: #475569; }
+    .tagPill.kategori { background: rgba(13,148,136,0.08); color: var(--accent); border: 1px solid rgba(13,148,136,0.15); }
+    .fmx-section { margin-bottom: 16px; }
+    .fmx-label {
+        display: block; font-weight: 700; font-size: 0.66rem;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: #94a3b8; margin-bottom: 4px;
+    }
+    .fmx-value { font-size: 0.9rem; line-height: 1.6; color: #475569; white-space: pre-line; }
+    .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; border-top: 1px solid #eef2f7; padding-top: 14px; }
+    .f-grid .span2 { grid-column: 1 / -1; }
+
+    .fmx-foot {
+        padding: 16px 24px; background: #f8fafc;
+        border-top: 1px solid #eef2f7;
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 12px; flex-shrink: 0;
+    }
+    .btnPrimary {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 16px; border-radius: 12px;
+        background: var(--accent); color: #fff; font-weight: 700;
+        font-size: 0.8rem; font-family: 'Plus Jakarta Sans', sans-serif;
+        text-decoration: none; transition: all 0.25s;
+    }
+    .btnPrimary:hover { background: #0f766e; box-shadow: 0 4px 20px rgba(13,148,136,0.3); }
+    .btnGhost {
+        padding: 8px 16px; border-radius: 12px;
+        background: #fff; border: 1px solid #dbe1e8;
+        color: #64748b; font-weight: 600; font-size: 0.8rem;
+        cursor: pointer; transition: all 0.2s;
+    }
+    .btnGhost:hover { background: #f1f5f9; }
+    @media (max-width: 600px) {
+        .fmx-box { border-radius: 14px; }
+        .f-grid { grid-template-columns: 1fr; }
+    }
+</style>
+@endpush
 
 @push('scripts')
 <script>
@@ -873,8 +993,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var jenisLabel = jenis === 'aset_desa' ? 'Aset Desa' : 'Fasilitas Publik';
         var kategoriLabel = kategoriList[f.kategori] || f.kategori;
         document.getElementById('modalTags').innerHTML =
-            '<span class="px-2.5 py-1 text-xs font-semibold rounded-full ' + (jenis === 'aset_desa' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800') + '">' + jenisLabel + '</span>' +
-            '<span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">' + kategoriLabel + '</span>';
+            '<span class="tagPill ' + (jenis === 'aset_desa' ? 'aset' : 'publik') + '">' + jenisLabel + '</span>' +
+            '<span class="tagPill kategori">' + kategoriLabel + '</span>';
 
         // Address
         document.getElementById('modalAddress').textContent = f.alamat || 'Desa Nekmese, Kec. Amarasi Selatan';
@@ -907,33 +1027,34 @@ document.addEventListener('DOMContentLoaded', function () {
         var validPhotos = photos.filter(function(p) { return p.photo_url; });
 
         if (validPhotos.length > 0) {
-            container.classList.remove('hidden');
-            placeholder.classList.add('hidden');
+            container.classList.add('show');
+            placeholder.classList.remove('show');
             slideTotal = validPhotos.length;
 
             validPhotos.forEach(function(p, idx) {
                 var img = document.createElement('img');
                 img.src = p.photo_url;
-                img.className = 'w-full h-full object-cover flex-shrink-0';
+                img.className = '';
                 img.alt = '';
                 slidesEl.appendChild(img);
 
                 var dot = document.createElement('button');
-                dot.className = 'w-2 h-2 rounded-full ' + (idx === 0 ? 'bg-white' : 'bg-white/50');
+                dot.type = 'button';
+                dot.className = 'carDot' + (idx === 0 ? ' active' : '');
                 dot.setAttribute('data-index', idx);
                 dot.onclick = function() { goToSlide(parseInt(this.getAttribute('data-index'))); };
                 dotsEl.appendChild(dot);
             });
 
-            prevBtn.classList.toggle('hidden', slideTotal <= 1);
-            nextBtn.classList.toggle('hidden', slideTotal <= 1);
+            prevBtn.classList.toggle('show', slideTotal > 1);
+            nextBtn.classList.toggle('show', slideTotal > 1);
         } else {
-            container.classList.add('hidden');
-            placeholder.classList.remove('hidden');
+            container.classList.remove('show');
+            placeholder.classList.add('show');
             placeholder.innerHTML = '<i class="fas ' + getIconForCategory(f.kategori) + '"></i>';
         }
 
-        document.getElementById('facilityModal').classList.remove('hidden');
+        document.getElementById('facilityModal').classList.add('open');
         document.body.style.overflow = 'hidden';
         focusMarker(id);
     }
@@ -947,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function closeModal() {
-        document.getElementById('facilityModal').classList.add('hidden');
+        document.getElementById('facilityModal').classList.remove('open');
         document.body.style.overflow = '';
     }
 
@@ -960,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('carouselSlides').style.transform = 'translateX(-' + (idx * 100) + '%)';
         var dots = document.getElementById('carouselDots').children;
         Array.from(dots).forEach(function(d, i) {
-            d.className = 'w-2 h-2 rounded-full ' + (i === idx ? 'bg-white' : 'bg-white/50');
+            d.className = 'carDot' + (i === idx ? ' active' : '');
         });
     }
 
