@@ -273,6 +273,7 @@
             padding: 0.3rem;
         }
     </style>
+    @stack('styles')
 </head>
 <body>
     <!-- Sidebar -->
@@ -341,5 +342,6 @@
             }, 4000);
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

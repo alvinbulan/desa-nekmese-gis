@@ -3,7 +3,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Facility;
+use App\Models\FacilityPhoto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FacilityController extends Controller
 {
@@ -107,5 +109,34 @@ class FacilityController extends Controller
 
         return redirect()->route('admin.facilities.index')
             ->with('success', 'Fasilitas berhasil dihapus.');
+    }
+
+    /**
+     * Hapus satu gambar tertentu pada fasilitas tanpa menghapus fasilitas itu sendiri.
+     *
+     * Multi-gambar disimpan pada tabel relasi facility_photos (satu baris per foto).
+     * Method menerima photo_id untuk menemukan record yang tepat, menghapus file fisik
+     * di disk public (public/images), lalu menghapus record dari database.
+     */
+    public function destroyImage(Request $request, $facilityId)
+    {
+        $facility = Facility::findOrFail($facilityId);
+
+        $photo = FacilityPhoto::where('facility_id', $facility->id)
+            ->findOrFail($request->input('photo_id'));
+
+        if ($photo->photo_path) {
+            $fullPath = public_path('images/' . ltrim($photo->photo_path, '/'));
+            if (is_file($fullPath)) {
+                \Illuminate\Support\Facades\File::delete($fullPath);
+            }
+        }
+
+        $photo->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Gambar berhasil dihapus!',
+        ]);
     }
 }

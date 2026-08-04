@@ -146,6 +146,7 @@ function previewGalleryPhotos(event) {
     if (!grid) return;
 
     var facilityId = {{ isset($facility) ? $facility->id : 'null' }};
+    var csrf = document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}';
 
     grid.addEventListener('click', function(e) {
         var btn = e.target.closest('.gallery-del');
@@ -153,16 +154,54 @@ function previewGalleryPhotos(event) {
         e.stopPropagation();
         var id = btn.dataset.id;
         var item = btn.closest('.gallery-item');
-        if (!confirm('Hapus foto ini?')) return;
 
-        fetch('/admin/facilities/' + facilityId + '/photos/' + id, {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Hapus foto ini?',
+                text: 'Gambar akan dihapus permanen dari fasilitas ini.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Ya, hapus',
+                cancelButtonText: 'Batal'
+            }).then(function(result) {
+                if (!result.isConfirmed) return;
+                deletePhoto(item, id);
+            });
+        } else {
+            if (!confirm('Hapus foto ini?')) return;
+            deletePhoto(item, id);
+        }
+    });
+
+    function deletePhoto(item, photoId) {
+        fetch('{{ url('/admin/facilities') }}/' + facilityId + '/delete-image', {
             method: 'DELETE',
-            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}' },
+            headers: {
+                'X-CSRF-TOKEN': csrf,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ photo_id: photoId })
         })
         .then(function(r) { return r.json(); })
-        .then(function(data) { if (data.success) item.remove(); })
+        .then(function(data) {
+            if (data.success) {
+                item.remove();
+                if (typeof Swal !== 'undefined' && Swal.isVisible()) Swal.fire({ title: 'Terhapus!', text: data.message, icon: 'success', timer: 1500, showConfirmButton: false });
+            }
+        })
         .catch(function() { alert('Gagal menghapus foto.'); });
-    });
+    }
+})();
+
+// Load SweetAlert2 jika belum tersedia
+(function() {
+    if (window.Swal) return;
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+    document.head.appendChild(s);
 })();
 </script>
 @endpush

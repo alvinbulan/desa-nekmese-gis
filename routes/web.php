@@ -51,6 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/facilities/{facility}/photos', [FacilityPhotoController::class, 'index'])->name('facilities.photos.index');
         Route::post('/facilities/{facility}/photos', [FacilityPhotoController::class, 'upload'])->name('facilities.photos.upload');
         Route::delete('/facilities/{facility}/photos/{photo}', [FacilityPhotoController::class, 'destroy'])->name('facilities.photos.destroy');
+        Route::delete('/facilities/{id}/delete-image', [AdminFacilityController::class, 'destroyImage'])->name('facilities.delete-image');
         Route::resource('announcements', AnnouncementController::class)
             ->parameters(['announcements' => 'announcement']);
         Route::resource('regulations', RegulationController::class)
