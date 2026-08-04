@@ -292,6 +292,7 @@
         </div>
         <div class="spacer"></div>
         <div class="logout-link">
+            <a href="{{ route('admin.password.edit') }}" class="{{ request()->routeIs('admin.password.*') ? 'active' : '' }}"><i class="fas fa-key"></i> Ganti Password</a>
             <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Keluar</a>
             <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display:none;">@csrf</form>
         </div>

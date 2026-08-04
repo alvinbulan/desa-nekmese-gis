@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\SidebarMenuController;
 use App\Http\Controllers\Admin\FacilityPhotoController;
 use App\Http\Controllers\Admin\AssetSectionController;
+use App\Http\Controllers\Admin\PasswordController;
 
 // Public Routes
 Route::get('/storage/{path}', function (string $path) {
@@ -41,6 +42,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
+        Route::post('/change-password', [PasswordController::class, 'update'])->name('password.update');
 
         Route::resource('facilities', AdminFacilityController::class)
             ->parameters(['facilities' => 'facility']);
