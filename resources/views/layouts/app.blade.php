@@ -8,7 +8,7 @@
     @php
         $_favicon = App\Models\Setting::getValue('favicon_url');
         $_faviconHref = $_favicon
-            ? (str_starts_with($_favicon, 'http') ? $_favicon : '/images/' . ltrim($_favicon, '/'))
+            ? (str_starts_with($_favicon, 'http') ? $_favicon : asset('images/' . ltrim($_favicon, '/')))
             : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230D9488'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='sans-serif' fill='%23fff'%3EN%3C/text%3E%3C/svg%3E";
     @endphp
     <link rel="icon" href="{{ $_faviconHref }}">
@@ -670,7 +670,7 @@
         }
         .toast.show { opacity: 1; transform: translateY(0); }
 
-        /* ── Scroll-Reveal Animation ── */
+        /* â”€â”€ Scroll-Reveal Animation â”€â”€ */
         .reveal {
             opacity: 0;
             transform: translateY(24px);
@@ -695,7 +695,7 @@
         @php $_logo = App\Models\Setting::getValue('logo_url'); @endphp
         <a href="/" class="logo">
             @if($_logo)
-            <img src="{{ str_starts_with($_logo, 'http') ? $_logo : '/images/' . ltrim($_logo, '/') }}" alt="Logo" style="height:36px;width:auto;border-radius:8px;">
+            <img src="{{ str_starts_with($_logo, 'http') ? $_logo : asset('images/' . ltrim($_logo, '/')) }}" alt="Logo" style="height:36px;width:auto;border-radius:8px;">
             @else
             <div class="logo-icon">N</div>
             @endif
@@ -728,7 +728,7 @@
             <div class="drawer-header">
                 <div class="drawer-logo">
                     @if($_logo)
-<img src="{{ str_starts_with($_logo, 'http') ? $_logo : '/images/' . ltrim($_logo, '/') }}" alt="Logo">
+<img src="{{ str_starts_with($_logo, 'http') ? $_logo : asset('images/' . ltrim($_logo, '/')) }}" alt="Logo">
                      @else
                      <div class="logo-fallback">N</div>
                     @endif
@@ -762,7 +762,7 @@
             <div>
                 <div class="footer-logo">
                     @if($_logo)
-                    <img src="{{ str_starts_with($_logo, 'http') ? $_logo : '/images/' . ltrim($_logo, '/') }}" alt="Logo" style="height:32px;width:auto;border-radius:50%;">
+                    <img src="{{ str_starts_with($_logo, 'http') ? $_logo : asset('images/' . ltrim($_logo, '/')) }}" alt="Logo" style="height:32px;width:auto;border-radius:50%;">
                     @else
                     <div class="logo-icon">N</div>
                     @endif

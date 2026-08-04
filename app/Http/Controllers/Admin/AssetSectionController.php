@@ -31,6 +31,7 @@ class AssetSectionController extends Controller
                 Storage::disk('public')->delete($data->main_image);
             }
             $data->main_image = $request->file('main_image')->store('section-assets', 'public');
+            $data->main_image = substr($data->main_image, 0, strrpos($data->main_image, '.')) . strtolower(substr($data->main_image, strrpos($data->main_image, '.')));
         }
 
         if ($request->hasFile('sub_image')) {
@@ -38,6 +39,7 @@ class AssetSectionController extends Controller
                 Storage::disk('public')->delete($data->sub_image);
             }
             $data->sub_image = $request->file('sub_image')->store('section-assets', 'public');
+            $data->sub_image = substr($data->sub_image, 0, strrpos($data->sub_image, '.')) . strtolower(substr($data->sub_image, strrpos($data->sub_image, '.')));
         }
 
         if ($request->boolean('remove_main_image')) {

@@ -56,6 +56,7 @@ class FacilityController extends Controller
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('facilities/photos', 'public');
+                $path = substr($path, 0, strrpos($path, '.')) . strtolower(substr($path, strrpos($path, '.')));
                 $facility->photos()->create(['photo_path' => $path]);
             }
         }
@@ -91,6 +92,7 @@ class FacilityController extends Controller
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('facilities/photos', 'public');
+                $path = substr($path, 0, strrpos($path, '.')) . strtolower(substr($path, strrpos($path, '.')));
                 $facility->photos()->create(['photo_path' => $path]);
             }
         }

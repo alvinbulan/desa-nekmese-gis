@@ -19,6 +19,7 @@ class FacilityController extends Controller
         $jenisList = Facility::jenisList();
         $sektorList = Facility::sektorList();
         $heroBg = Setting::getValue('hero_bg_image');
+        $heroBg = $heroBg && !str_starts_with($heroBg, 'http') ? ltrim(preg_replace('#^images/+#i', '', ltrim($heroBg, '/')), '/') : $heroBg;
         $heroSetting = Setting::where('key', 'hero_bg_image')->first();
         $heroTs = $heroSetting?->updated_at?->timestamp ?? time();
         $sectionHeaders = SidebarMenu::active()->ordered()->where('menu_name', '!=', 'Beranda')->get()->keyBy(function($m) {
@@ -27,6 +28,8 @@ class FacilityController extends Controller
         $asetSection = AssetSection::first();
         $asetMainImage = $asetSection?->main_image;
         $asetSubImage = $asetSection?->sub_image;
+        $asetMainImage = $asetMainImage ? ltrim(preg_replace('#^images/+#i', '', ltrim($asetMainImage, '/')), '/') : null;
+        $asetSubImage = $asetSubImage ? ltrim(preg_replace('#^images/+#i', '', ltrim($asetSubImage, '/')), '/') : null;
 
         $totalSD = Facility::active()->where(function ($query) {
             $query->where('nama', 'LIKE', '%SD%')

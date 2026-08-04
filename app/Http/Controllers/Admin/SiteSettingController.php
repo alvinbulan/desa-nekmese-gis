@@ -28,6 +28,7 @@ class SiteSettingController extends Controller
                 \Storage::disk('public')->delete($oldLogo);
             }
             $path = $request->file('logo')->store('site/logo', 'public');
+            $path = substr($path, 0, strrpos($path, '.')) . strtolower(substr($path, strrpos($path, '.')));
             Setting::setValue('logo_url', $path);
         } elseif ($request->boolean('remove_logo')) {
             $oldLogo = Setting::getValue('logo_url');
@@ -44,6 +45,7 @@ class SiteSettingController extends Controller
                 \Storage::disk('public')->delete($oldFavicon);
             }
             $path = $request->file('favicon')->store('site/favicon', 'public');
+            $path = substr($path, 0, strrpos($path, '.')) . strtolower(substr($path, strrpos($path, '.')));
             Setting::setValue('favicon_url', $path);
         } elseif ($request->boolean('remove_favicon')) {
             $oldFavicon = Setting::getValue('favicon_url');

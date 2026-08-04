@@ -40,7 +40,7 @@
                 <input type="file" name="file" class="form-control" accept=".pdf,.doc,.docx">
                 @if(isset($regulation) && $regulation->file_path)
                 <div style="margin-top:0.5rem;font-size:0.75rem;">
-                    <a href="/storage/{{ ltrim($regulation->file_path, '/') }}" target="_blank" style="color:var(--accent);"><i class="fas fa-file-pdf"></i> File saat ini</a>
+                    <a href="{{ asset('storage/' . ltrim($regulation->file_path, '/')) }}" target="_blank" style="color:var(--accent);"><i class="fas fa-file-pdf"></i> File saat ini</a>
                 </div>
                 @endif
                 <div class="form-hint">Maks. 10MB. PDF, DOC, DOCX.</div>

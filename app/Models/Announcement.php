@@ -19,7 +19,7 @@ class Announcement extends Model
     {
         if (!$this->gambar) return null;
         if (str_starts_with($this->gambar, 'http')) return $this->gambar;
-        return '/images/' . ltrim($this->gambar, '/');
+        return asset('images/' . ltrim($this->gambar, '/'));
     }
 
     public function scopeActive($query)

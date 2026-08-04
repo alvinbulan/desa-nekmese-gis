@@ -27,7 +27,7 @@ class HeroSettingController extends Controller
                 \Storage::disk('public')->delete($oldValue);
             }
 
-            $ext = $request->file('hero_image')->extension();
+            $ext = strtolower($request->file('hero_image')->extension());
             $path = $request->file('hero_image')->storeAs('hero', 'beranda-hero-' . now()->timestamp . '.' . $ext, 'public');
             Setting::setValue('hero_bg_image', $path);
         } elseif ($request->boolean('remove_image')) {

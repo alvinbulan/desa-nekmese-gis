@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label>Foto Utama <span style="font-weight:400;color:#94a3b8;">(Kotak Besar Belakang)</span></label>
 
-                <div id="mainPreview" style="width:100%;aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(145deg,#0D9488,#0F766E);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:3rem;margin-bottom:0.75rem;background-size:cover;background-position:center;{{ $mainImage ? 'background-image:url(' . '/images/' . ltrim($mainImage, '/') . ')' : '' }}">
+                <div id="mainPreview" style="width:100%;aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(145deg,#0D9488,#0F766E);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:3rem;margin-bottom:0.75rem;background-size:cover;background-position:center;{{ $mainImage ? 'background-image:url(' . asset('images/' . ltrim($mainImage, '/')) . ')' : '' }}">
                     @if(!$mainImage)
                     <i class="fas fa-building"></i>
                     @endif
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label>Foto Sekunder <span style="font-weight:400;color:#94a3b8;">(Kotak Kecil Depan)</span></label>
 
-                <div id="subPreview" style="width:180px;aspect-ratio:1;border-radius:14px;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,0.12);background:linear-gradient(145deg,#14B8A6,#0F766E);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:2rem;margin-bottom:0.75rem;background-size:cover;background-position:center;{{ $subImage ? 'background-image:url(' . '/images/' . ltrim($subImage, '/') . ')' : '' }}">
+                <div id="subPreview" style="width:180px;aspect-ratio:1;border-radius:14px;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,0.12);background:linear-gradient(145deg,#14B8A6,#0F766E);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:2rem;margin-bottom:0.75rem;background-size:cover;background-position:center;{{ $subImage ? 'background-image:url(' . asset('images/' . ltrim($subImage, '/')) . ')' : '' }}">
                     @if(!$subImage)
                     <i class="fas fa-truck"></i>
                     @endif

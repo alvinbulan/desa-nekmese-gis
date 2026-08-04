@@ -20,14 +20,14 @@ class SidebarMenu extends Model
     {
         if (!$this->banner_image_url) return null;
         if (str_starts_with($this->banner_image_url, 'http')) return $this->banner_image_url;
-        return '/images/' . ltrim($this->banner_image_url, '/') . '?v=' . ($this->updated_at?->timestamp ?? time());
+        return asset('images/' . ltrim($this->banner_image_url, '/')) . '?v=' . ($this->updated_at?->timestamp ?? time());
     }
 
     public function getBackgroundUrlAttribute(): ?string
     {
         if (!$this->background_image_url) return null;
         if (str_starts_with($this->background_image_url, 'http')) return $this->background_image_url;
-        return '/images/' . ltrim($this->background_image_url, '/') . '?v=' . ($this->updated_at?->timestamp ?? time());
+        return asset('images/' . ltrim($this->background_image_url, '/')) . '?v=' . ($this->updated_at?->timestamp ?? time());
     }
 
     public function scopeActive($q) { return $q->where('active', true); }

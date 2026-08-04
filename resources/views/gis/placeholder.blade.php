@@ -221,7 +221,7 @@
                 <div class="doc-excerpt">{{ Str::limit($item->deskripsi ?? $item->isi ?? '', 150) }}</div>
             </div>
             @if(!str_contains($pageTitle, 'Pengumuman') && $item->file_path)
-            <a href="/storage/{{ ltrim($item->file_path, '/') }}" target="_blank" class="doc-action"><i class="fas fa-download"></i> PDF</a>
+            <a href="{{ asset('storage/' . ltrim($item->file_path, '/')) }}" target="_blank" class="doc-action"><i class="fas fa-download"></i> PDF</a>
             @elseif(str_contains($pageTitle, 'Pengumuman'))
             <button class="doc-action" onclick="showToast('Fitur unduh akan segera tersedia')"><i class="fas fa-download"></i> PDF</button>
             @endif

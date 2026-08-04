@@ -41,7 +41,7 @@ class SidebarMenuController extends Controller
             if ($sidebarMenu->banner_image_url && \Storage::disk('public')->exists($sidebarMenu->banner_image_url)) {
                 \Storage::disk('public')->delete($sidebarMenu->banner_image_url);
             }
-            $ext = $request->file('banner_image')->extension();
+            $ext = strtolower($request->file('banner_image')->extension());
             $data['banner_image_url'] = $request->file('banner_image')->storeAs('headers', $slug . '-banner-' . $timestamp . '.' . $ext, 'public');
         } elseif ($request->boolean('remove_banner')) {
             if ($sidebarMenu->banner_image_url && \Storage::disk('public')->exists($sidebarMenu->banner_image_url)) {
@@ -55,7 +55,7 @@ class SidebarMenuController extends Controller
             if ($sidebarMenu->background_image_url && \Storage::disk('public')->exists($sidebarMenu->background_image_url)) {
                 \Storage::disk('public')->delete($sidebarMenu->background_image_url);
             }
-            $ext = $request->file('background_image')->extension();
+            $ext = strtolower($request->file('background_image')->extension());
             $data['background_image_url'] = $request->file('background_image')->storeAs('headers', $slug . '-' . $timestamp . '.' . $ext, 'public');
         } elseif ($request->boolean('remove_background')) {
             if ($sidebarMenu->background_image_url && \Storage::disk('public')->exists($sidebarMenu->background_image_url)) {

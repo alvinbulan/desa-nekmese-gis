@@ -29,7 +29,7 @@
                         <strong style="font-size:0.7rem;color:var(--text-muted);display:block;margin-bottom:4px;">Pratinjau</strong>
                         <div id="logoPreviewWrap" style="width:48px;height:48px;border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;">
                             @if($logoUrl)
-                            <img id="logoPreview" src="{{ str_starts_with($logoUrl, 'http') ? $logoUrl : '/images/' . ltrim($logoUrl, '/') }}" style="max-width:100%;max-height:100%;object-fit:contain;">
+                            <img id="logoPreview" src="{{ str_starts_with($logoUrl, 'http') ? $logoUrl : asset('images/' . ltrim($logoUrl, '/')) }}" style="max-width:100%;max-height:100%;object-fit:contain;">
                             @else
                             <span id="logoPreview" style="font-size:0.7rem;font-weight:800;color:var(--accent);">N</span>
                             @endif
@@ -40,7 +40,7 @@
                         <div id="navbarSim" style="display:flex;align-items:center;gap:6px;padding:0.4rem 0.8rem;border-radius:8px;background:var(--primary);">
                             <div id="navbarLogoPreview" style="width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--accent);font-size:0.55rem;font-weight:800;color:#fff;">
                                 @if($logoUrl)
-                                <img src="{{ str_starts_with($logoUrl, 'http') ? $logoUrl : '/images/' . ltrim($logoUrl, '/') }}" style="max-width:100%;max-height:100%;object-fit:contain;">
+                                <img src="{{ str_starts_with($logoUrl, 'http') ? $logoUrl : asset('images/' . ltrim($logoUrl, '/')) }}" style="max-width:100%;max-height:100%;object-fit:contain;">
                                 @else
                                 N
                                 @endif
@@ -80,7 +80,7 @@
                         <strong style="font-size:0.7rem;color:var(--text-muted);display:block;margin-bottom:4px;">Pratinjau</strong>
                         <div style="width:32px;height:32px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;">
                             @if($faviconUrl)
-                            <img id="faviconPreview" src="{{ str_starts_with($faviconUrl, 'http') ? $faviconUrl : '/images/' . ltrim($faviconUrl, '/') }}" style="width:100%;height:100%;object-fit:contain;">
+                            <img id="faviconPreview" src="{{ str_starts_with($faviconUrl, 'http') ? $faviconUrl : asset('images/' . ltrim($faviconUrl, '/')) }}" style="width:100%;height:100%;object-fit:contain;">
                             @else
                             <span id="faviconPreview" style="font-size:0.6rem;font-weight:800;color:var(--accent);">N</span>
                             @endif
@@ -91,7 +91,7 @@
                         <div style="display:flex;align-items:center;gap:5px;padding:0.3rem 0.7rem;border-radius:6px 6px 0 0;background:#e2e8f0;">
                             <div id="tabFaviconPreview" style="width:14px;height:14px;border-radius:2px;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:0.45rem;font-weight:800;color:var(--accent);background:#fff;">
                                 @if($faviconUrl)
-                                <img src="{{ str_starts_with($faviconUrl, 'http') ? $faviconUrl : '/images/' . ltrim($faviconUrl, '/') }}" style="width:100%;height:100%;object-fit:contain;">
+                                <img src="{{ str_starts_with($faviconUrl, 'http') ? $faviconUrl : asset('images/' . ltrim($faviconUrl, '/')) }}" style="width:100%;height:100%;object-fit:contain;">
                                 @else
                                 N
                                 @endif

@@ -612,7 +612,7 @@
                         <div class="f-addr"><i class="fas fa-map-marker-alt"></i> {{ Str::limit($f->alamat ?? 'Desa Nekmese, Kec. Amarasi Selatan', 50) }}</div>
                         <div class="f-desc">{{ $f->deskripsi ?? 'Belum ada deskripsi untuk fasilitas ini.' }}</div>
                         <div class="f-actions">
-                            <button class="btn-detail" onclick="openModal({{ $f->id }})"><i class="fas fa-info-circle"></i> Detail</button>
+                            <button class="btn-detail" onclick="window.openFacilityDetail(@js($f))"><i class="fas fa-info-circle"></i> Detail</button>
                             <button class="btn-nav" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination={{ $f->latitude }},{{ $f->longitude }}', '_blank')" title="Petunjuk Arah"><i class="fas fa-directions"></i></button>
                         </div>
                     </div>
@@ -958,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     '<div style="padding:0;text-align:center;">' +
                     '<h4 style="margin:0.75rem 0 2px;font-size:0.85rem;font-weight:700;color:#1e293b;">' + f.nama + '</h4>' +
                     (f.alamat ? '<p style="margin:0 0 0.5rem;font-size:0.68rem;color:#64748b;">' + f.alamat + '</p>' : '') +
-                    '<button type="button" data-detail-id="' + f.id + '" class="popup-detail-btn" onclick="event.stopPropagation();window.openModal(' + f.id + ')">Lihat Detail</button>' +
+                    '<button type="button" data-detail-id="' + f.id + '" class="popup-detail-btn" onclick="event.stopPropagation();window.openFacilityDetail(' + f.id + ')">Lihat Detail</button>' +
                     '</div>',
                     { maxWidth: 260, className: 'custom-popup' }
                 );
@@ -987,9 +987,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function openModal(id) {
-        var f = facilities.find(function(item) { return item.id === id; });
-        if (!f) return;
+    function openFacilityDetail(facilityData) {
+        var data = facilityData;
+        if (typeof data === 'string') {
+            try { data = JSON.parse(data); } catch (e) { return; }
+        }
+        if (!data || typeof data !== 'object') return;
+
+        var f = data;
+        if (typeof data === 'number') {
+            f = facilities.find(function(item) { return item.id === data; });
+            if (!f) return;
+        } else if (!f.nama && typeof f.id !== 'undefined') {
+            var found = facilities.find(function(item) { return item.id === f.id; });
+            if (found) f = found;
+        }
 
         // Title
         document.getElementById('modalTitle').textContent = f.nama || 'Detail Fasilitas';
@@ -1010,19 +1022,23 @@ document.addEventListener('DOMContentLoaded', function () {
             '<span class="tagPill kategori">' + kategoriLabel + '</span>';
 
         // Address
-        document.getElementById('modalAddress').textContent = f.alamat || 'Desa Nekmese, Kec. Amarasi Selatan';
+        document.getElementById('modalAddress').textContent = f.alamat || 'Alamat tidak tersedia';
+        document.getElementById('modalAddress').title = f.alamat || '';
 
         // Description
         document.getElementById('modalDesc').textContent = f.deskripsi || 'Belum ada deskripsi untuk fasilitas ini.';
 
         // Info grid
-        document.getElementById('modalSektor').textContent = sektor[f.kategori] || 'Fasilitas Umum';
-        document.getElementById('modalKoordinat').textContent = f.latitude.toFixed(5) + ', ' + f.longitude.toFixed(5);
+        document.getElementById('modalSektor').textContent = (sektor && sektor[f.kategori]) || 'Fasilitas Umum';
         document.getElementById('modalJam').textContent = 'Senin - Jumat, 08:00 - 16:00 WITA';
 
-        // Google Maps CTA
-        var navLink = 'https://www.google.com/maps/dir/?api=1&destination=' + f.latitude + ',' + f.longitude;
-        document.getElementById('modalCta').href = navLink;
+        var lat = parseFloat(f.latitude);
+        var lng = parseFloat(f.longitude);
+        var latLngValid = !isNaN(lat) && !isNaN(lng) && (lat !== 0 || lng !== 0);
+        document.getElementById('modalKoordinat').textContent = latLngValid ? lat.toFixed(5) + ', ' + lng.toFixed(5) : '-';
+        document.getElementById('modalCta').href = latLngValid
+            ? 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
+            : '#';
 
         // Carousel
         var container = document.getElementById('carouselContainer');
@@ -1036,8 +1052,8 @@ document.addEventListener('DOMContentLoaded', function () {
         dotsEl.innerHTML = '';
         slideIdx = 0;
 
-        var photos = f.photos || [];
-        var validPhotos = photos.filter(function(p) { return p.photo_url; });
+        var photos = Array.isArray(f.photos) ? f.photos : [];
+        var validPhotos = photos.filter(function(p) { return p && p.photo_url; });
 
         if (validPhotos.length > 0) {
             container.classList.add('show');
@@ -1048,7 +1064,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 var img = document.createElement('img');
                 img.src = p.photo_url;
                 img.className = '';
-                img.alt = '';
+                img.alt = f.nama || '';
                 slidesEl.appendChild(img);
 
                 var dot = document.createElement('button');
@@ -1069,7 +1085,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('facilityModal').classList.add('open');
         document.body.style.overflow = 'hidden';
-        focusMarker(id);
+        if (typeof f.id !== 'undefined') focusMarker(f.id);
+    }
+
+    function openModal(id) {
+        var f = facilities.find(function(item) { return item.id === id; });
+        if (f) openFacilityDetail(f);
     }
 
     function focusMarker(id) {
@@ -1098,10 +1119,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    window.openFacilityDetail = function (data) { openFacilityDetail(data); };
     window.openModal = function (id) { openModal(id); };
+    window.closeFacilityDetail = function () { closeModal(); };
     window.openDetailModal = function (data) {
         if (typeof data === 'string') { try { data = JSON.parse(data); } catch (e) {} }
-        if (data && typeof data === 'object' && 'id' in data) { openModal(data.id); }
+        if (data && typeof data === 'object') { openFacilityDetail(data); }
         else if (typeof data === 'number') { openModal(data); }
     };
 

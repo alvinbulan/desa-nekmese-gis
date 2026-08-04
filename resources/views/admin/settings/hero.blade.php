@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label>Gambar Latar Saat Ini</label>
-                <div id="currentPreview" style="width:100%;aspect-ratio:21/9;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:0.78rem;background-size:cover;background-position:center;{{ $heroBg ? 'background-image:url(' . (str_starts_with($heroBg, 'http') ? $heroBg : '/images/' . ltrim($heroBg, '/')) . ')' : '' }}">
+                <div id="currentPreview" style="width:100%;aspect-ratio:21/9;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:0.78rem;background-size:cover;background-position:center;{{ $heroBg ? 'background-image:url(' . (str_starts_with($heroBg, 'http') ? $heroBg : asset('images/' . ltrim($heroBg, '/'))) . ')' : '' }}">
                     @if(!$heroBg)
                     <span><i class="fas fa-image" style="margin-right:6px;"></i>Belum ada gambar (akan menggunakan warna default)</span>
                     @endif

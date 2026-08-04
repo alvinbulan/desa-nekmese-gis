@@ -90,7 +90,7 @@
     .pill-cta:hover i { transform: translateX(3px); }
     .pill-wrap { display: flex; justify-content: center; margin-top: 1.5rem; }
 
-    /* ── Section backgrounds disabled on homepage per user request ── */
+    /* â”€â”€ Section backgrounds disabled on homepage per user request â”€â”€ */
 
     .aset-grid {
         display: grid;
@@ -99,7 +99,7 @@
         align-items: center;
     }
 
-    /* ── Image Collage (Left) ── */
+    /* â”€â”€ Image Collage (Left) â”€â”€ */
     .aset-collage {
         position: relative;
         width: 100%;
@@ -131,7 +131,7 @@
     }
     .aset-collage .img-secondary img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ── Storytelling (Right) ── */
+    /* â”€â”€ Storytelling (Right) â”€â”€ */
     .aset-story { padding: 0.5rem 0; }
     .aset-story .story-headline {
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -444,7 +444,7 @@
         align-items: center;
     }
 
-    /* ── Image Collage (Left) ── */
+    /* â”€â”€ Image Collage (Left) â”€â”€ */
     .aset-collage {
         position: relative;
         width: 100%;
@@ -476,7 +476,7 @@
     }
     .aset-collage .img-secondary img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ── Storytelling (Right) ── */
+    /* â”€â”€ Storytelling (Right) â”€â”€ */
     .aset-story { padding: 0.5rem 0; }
     .aset-story .story-headline {
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -566,11 +566,11 @@
 @endpush
 
 @section('hero')
-<!-- ════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SECTION 1: HERO BANNER & STATISTIK RINGKAS DESA (ISOLATED)
-     ════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section id="sec-beranda" class="hero-wrap"
-    style="background-image:linear-gradient(180deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.95) 100%){{ $heroBg ? ', url(' . str_replace("'", '%27', str_starts_with($heroBg, 'http') ? $heroBg : '/images/' . ltrim($heroBg, '/')) . '?v=' . $heroTs . ')' : '' }} !important;">
+    style="background-image:linear-gradient(180deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.95) 100%){{ $heroBg ? ', url(' . str_replace("'", '%27', (str_starts_with($heroBg, 'http') ? $heroBg : asset('images/' . ltrim($heroBg, '/')))) . '?v=' . $heroTs . ')' : '' }} !important;">
     <div class="hero-pattern"></div>
     <div class="hero-inner">
         <div class="hero-left reveal">
@@ -608,9 +608,9 @@
 @endsection
 
 @section('content')
-<!-- ════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SECTION 2: ASET DESA
-     ════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section id="sec-aset-desa" class="hp-section aset-editorial">
         <div class="sec-badge reveal"><i class="fas fa-landmark"></i> Aset Pemerintah Desa Nekmese</div>
         <div class="sec-head reveal reveal-delay-1" style="margin-bottom:1.5rem;">
@@ -625,14 +625,14 @@
             <div class="aset-collage reveal reveal-delay-1">
                 <div class="img-main" style="background:linear-gradient(145deg,#0D9488,#0F766E);">
                     @if($asetMainImage)
-                    <img src="/images/{{ ltrim($asetMainImage, '/') }}" alt="Aset Utama" class="w-full h-full object-cover">
+                    <img src="{{ asset('images/' . ltrim($asetMainImage, '/')) }}" alt="Aset Utama" class="w-full h-full object-cover">
                     @else
                     <i class="fas fa-building"></i>
                     @endif
                 </div>
                 <div class="img-secondary" style="background:linear-gradient(145deg,#14B8A6,#0F766E);">
                     @if($asetSubImage)
-                    <img src="/images/{{ ltrim($asetSubImage, '/') }}" alt="Aset Pendukung" class="w-full h-full object-cover">
+                    <img src="{{ asset('images/' . ltrim($asetSubImage, '/')) }}" alt="Aset Pendukung" class="w-full h-full object-cover">
                     @else
                     <i class="fas fa-truck"></i>
                     @endif
@@ -663,9 +663,9 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SECTION 3: PENDIDIKAN
-     ════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section id="sec-pendidikan" class="hp-section">
     <div class="pendidikan-header">
         <div class="pendidikan-left">
@@ -696,7 +696,7 @@
     @if($pendidikanFacilities->count() > 0)
     <div class="preview-grid">
         @foreach($pendidikanFacilities as $f)
-        <div class="preview-card reveal reveal-delay-{{ $loop->iteration }}" onclick="openModal({{ $f->id }})">
+        <div class="preview-card reveal reveal-delay-{{ $loop->iteration }}" onclick="window.openFacilityDetail(@js($f))">
             <div class="pc-img">
                     @if($f->photos && $f->photos->isNotEmpty())
                         <img src="{{ $f->photos->first()->photo_url }}" alt="{{ $f->nama }}">
@@ -709,7 +709,7 @@
                     <h4>{{ $f->nama }}</h4>
                     <div class="pc-sub"><i class="fas fa-map-marker-alt"></i> {{ Str::limit($f->alamat ?? 'Desa Nekmese', 40) }}</div>
                     <div class="pc-desc">{{ $f->deskripsi ?? 'Fasilitas pendidikan di Desa Nekmese.' }}</div>
-                    <button class="pc-action" onclick="event.stopPropagation();openModal({{ $f->id }})"><i class="fas fa-info-circle"></i> Detail</button>
+                    <button class="pc-action" onclick="event.stopPropagation();window.openFacilityDetail(@js($f))"><i class="fas fa-info-circle"></i> Detail</button>
                 </div>
             </div>
             @endforeach
@@ -723,9 +723,9 @@
         </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SECTION 4: KESEHATAN
-     ════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section id="sec-kesehatan" class="hp-section">
         <div class="sec-badge reveal"><i class="fas fa-heartbeat"></i> Layanan Sehat</div>
         <div class="sec-head reveal reveal-delay-1">
@@ -738,7 +738,7 @@
         @if($kesehatanFacilities->count() > 0)
         <div class="preview-grid">
             @foreach($kesehatanFacilities as $f)
-            <div class="preview-card reveal reveal-delay-{{ $loop->iteration }}" onclick="openModal({{ $f->id }})">
+            <div class="preview-card reveal reveal-delay-{{ $loop->iteration }}" onclick="window.openFacilityDetail(@js($f))">
                 <div class="pc-img">
                     @if($f->photos && $f->photos->isNotEmpty())
                         <img src="{{ $f->photos->first()->photo_url }}" alt="{{ $f->nama }}">
@@ -751,7 +751,7 @@
                     <h4>{{ $f->nama }}</h4>
                     <div class="pc-sub"><i class="fas fa-map-marker-alt"></i> {{ Str::limit($f->alamat ?? 'Desa Nekmese', 40) }}</div>
                     <div class="pc-desc">{{ $f->deskripsi ?? 'Fasilitas kesehatan di Desa Nekmese.' }}</div>
-                    <button class="pc-action" onclick="event.stopPropagation();openModal({{ $f->id }})"><i class="fas fa-info-circle"></i> Detail</button>
+                    <button class="pc-action" onclick="event.stopPropagation();window.openFacilityDetail(@js($f))"><i class="fas fa-info-circle"></i> Detail</button>
                 </div>
             </div>
             @endforeach
@@ -764,9 +764,9 @@
         </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SECTION 5: TEMPAT IBADAH
-     ════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section id="sec-ibadah" class="hp-section">
         <div class="sec-badge reveal"><i class="fas fa-place-of-worship"></i> Rumah Ibadah</div>
         <div class="sec-head reveal reveal-delay-1">
@@ -779,7 +779,7 @@
         @if($ibadahFacilities->count() > 0)
         <div class="preview-grid">
             @foreach($ibadahFacilities as $f)
-            <div class="preview-card reveal reveal-delay-{{ $loop->iteration }}" onclick="openModal({{ $f->id }})">
+            <div class="preview-card reveal reveal-delay-{{ $loop->iteration }}" onclick="window.openFacilityDetail(@js($f))">
                 <div class="pc-img">
                     @if($f->photos && $f->photos->isNotEmpty())
                         <img src="{{ $f->photos->first()->photo_url }}" alt="{{ $f->nama }}">
@@ -796,7 +796,7 @@
                     <h4>{{ $f->nama }}</h4>
                     <div class="pc-sub"><i class="fas fa-map-marker-alt"></i> {{ Str::limit($f->alamat ?? 'Desa Nekmese', 40) }}</div>
                     <div class="pc-desc">{{ $f->deskripsi ?? 'Tempat ibadah di Desa Nekmese.' }}</div>
-                    <button class="pc-action" onclick="event.stopPropagation();openModal({{ $f->id }})"><i class="fas fa-info-circle"></i> Detail</button>
+                    <button class="pc-action" onclick="event.stopPropagation();window.openFacilityDetail(@js($f))"><i class="fas fa-info-circle"></i> Detail</button>
                 </div>
             </div>
             @endforeach
@@ -810,9 +810,9 @@
 </section>
 
 
-<!-- ════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SECTION 7: PETA INTERAKTIF DESA (formerly section 6)
-     ════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section id="peta-desa" class="hp-section" style="padding-bottom:0;">
         <div class="sec-badge reveal"><i class="fas fa-map-marked-alt"></i> Peta Interaktif</div>
         <div class="sec-head reveal reveal-delay-1">
@@ -1045,6 +1045,7 @@ document.addEventListener('DOMContentLoaded', function () {
     facilities = @json($facilities);
     kategoriList = @json($kategoriList);
     jenisList = @json($jenisList);
+    sektor = @json($sektorList);
 
     if (typeof facilities !== 'undefined' && Array.isArray(facilities)) {
         facilities.forEach(f => {
@@ -1070,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     '<div style="padding:0;text-align:center;">' +
                     '<h4 style="margin:0.75rem 0 2px;font-size:0.85rem;font-weight:700;color:#1e293b;">' + f.nama + '</h4>' +
                     (f.alamat ? '<p style="margin:0 0 0.5rem;font-size:0.68rem;color:#64748b;">' + f.alamat + '</p>' : '') +
-                    '<button type="button" data-detail-id="' + f.id + '" class="popup-detail-btn" onclick="event.stopPropagation();window.openModal(' + f.id + ')">Lihat Detail</button>' +
+                    '<button type="button" data-detail-id="' + f.id + '" class="popup-detail-btn" onclick="event.stopPropagation();window.openFacilityDetail(' + f.id + ')">Lihat Detail</button>' +
                     '</div>',
                     { maxWidth: 260, className: 'custom-popup' }
                 );
@@ -1085,9 +1086,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 300);
 });
 
-    function openModal(id) {
-        var f = facilities.find(function(item) { return item.id === id; });
-        if (!f) return;
+    function openFacilityDetail(facilityData) {
+        var data = facilityData;
+        if (typeof data === 'string') {
+            try { data = JSON.parse(data); } catch (e) { return; }
+        }
+        if (!data || typeof data !== 'object') return;
+
+        var f = data;
+        if (typeof data === 'number') {
+            f = facilities.find(function(item) { return item.id === data; });
+            if (!f) return;
+        } else if (!f.nama && typeof f.id !== 'undefined') {
+            var found = facilities.find(function(item) { return item.id === f.id; });
+            if (found) f = found;
+        }
 
         // Title
         document.getElementById('modalTitle').textContent = f.nama || 'Detail Fasilitas';
@@ -1108,21 +1121,23 @@ document.addEventListener('DOMContentLoaded', function () {
             '<span class="tagPill kategori">' + kategoriLabel + '</span>';
 
         // Address
-        document.getElementById('modalAddress').textContent = f.alamat || 'Desa Nekmese, Kec. Amarasi Selatan';
+        document.getElementById('modalAddress').textContent = f.alamat || 'Alamat tidak tersedia';
+        document.getElementById('modalAddress').title = f.alamat || '';
 
         // Description
         document.getElementById('modalDesc').textContent = f.deskripsi || 'Belum ada deskripsi untuk fasilitas ini.';
 
         // Info grid
-        var sektor = @json($sektorList);
-        var sektorName = sektor[f.kategori] || 'Fasilitas Umum';
-        document.getElementById('modalSektor').textContent = sektorName;
-        document.getElementById('modalKoordinat').textContent = f.latitude.toFixed(5) + ', ' + f.longitude.toFixed(5);
+        document.getElementById('modalSektor').textContent = (sektor && sektor[f.kategori]) || 'Fasilitas Umum';
         document.getElementById('modalJam').textContent = 'Senin - Jumat, 08:00 - 16:00 WITA';
 
-        // Google Maps CTA
-        var navLink = 'https://www.google.com/maps/dir/?api=1&destination=' + f.latitude + ',' + f.longitude;
-        document.getElementById('modalCta').href = navLink;
+        var lat = parseFloat(f.latitude);
+        var lng = parseFloat(f.longitude);
+        var latLngValid = !isNaN(lat) && !isNaN(lng) && (lat !== 0 || lng !== 0);
+        document.getElementById('modalKoordinat').textContent = latLngValid ? lat.toFixed(5) + ', ' + lng.toFixed(5) : '-';
+        document.getElementById('modalCta').href = latLngValid
+            ? 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
+            : '#';
 
         // Carousel
         var container = document.getElementById('carouselContainer');
@@ -1136,8 +1151,8 @@ document.addEventListener('DOMContentLoaded', function () {
         dotsEl.innerHTML = '';
         slideIdx = 0;
 
-        var photos = f.photos || [];
-        var validPhotos = photos.filter(function(p) { return p.photo_url; });
+        var photos = Array.isArray(f.photos) ? f.photos : [];
+        var validPhotos = photos.filter(function(p) { return p && p.photo_url; });
 
         if (validPhotos.length > 0) {
             container.classList.add('show');
@@ -1148,7 +1163,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 var img = document.createElement('img');
                 img.src = p.photo_url;
                 img.className = '';
-                img.alt = '';
+                img.alt = f.nama || '';
                 slidesEl.appendChild(img);
 
                 var dot = document.createElement('button');
@@ -1169,7 +1184,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('facilityModal').classList.add('open');
         document.body.style.overflow = 'hidden';
-        focusMarker(id);
+        if (typeof f.id !== 'undefined') focusMarker(f.id);
+    }
+
+    function openModal(id) {
+        var f = facilities.find(function(item) { return item.id === id; });
+        if (f) openFacilityDetail(f);
     }
 
     function focusMarker(id) {
@@ -1198,10 +1218,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    window.openFacilityDetail = function (data) { openFacilityDetail(data); };
     window.openModal = function (id) { openModal(id); };
+    window.closeFacilityDetail = function () { closeModal(); };
     window.openDetailModal = function (data) {
         if (typeof data === 'string') { try { data = JSON.parse(data); } catch (e) {} }
-        if (data && typeof data === 'object' && 'id' in data) { openModal(data.id); }
+        if (data && typeof data === 'object') { openFacilityDetail(data); }
         else if (typeof data === 'number') { openModal(data); }
     };
 

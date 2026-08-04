@@ -19,6 +19,7 @@ class FacilityPhotoController extends Controller
 
         foreach ($request->file('photos') as $file) {
             $path = $file->store('facilities/photos', 'public');
+            $path = substr($path, 0, strrpos($path, '.')) . strtolower(substr($path, strrpos($path, '.')));
             $photo = $facility->photos()->create(['photo_path' => $path]);
             $uploaded[] = ['id' => $photo->id, 'url' => $photo->photo_url];
         }

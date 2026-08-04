@@ -30,7 +30,7 @@
                         <td style="font-size:0.75rem;">{{ $r->tanggal?->format('d M Y') ?? '-' }}</td>
                         <td>
                             @if($r->file_path)
-                            <a href="/storage/{{ ltrim($r->file_path, '/') }}" target="_blank" style="color:var(--accent);font-size:0.75rem;"><i class="fas fa-file-pdf"></i> Lihat</a>
+                            <a href="{{ asset('storage/' . ltrim($r->file_path, '/')) }}" target="_blank" style="color:var(--accent);font-size:0.75rem;"><i class="fas fa-file-pdf"></i> Lihat</a>
                             @else
                             <span style="color:var(--text-muted);font-size:0.7rem;">-</span>
                             @endif

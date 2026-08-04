@@ -18,7 +18,7 @@ class FacilityPhoto extends Model
     public function getPhotoUrlAttribute(): string
     {
         if (str_starts_with($this->photo_path, 'http')) return $this->photo_path;
-        return '/images/' . ltrim($this->photo_path, '/');
+        return asset('images/' . ltrim($this->photo_path, '/'));
     }
 
     protected static function booted(): void
