@@ -114,21 +114,52 @@ class FacilityController extends Controller
     /**
      * Hapus satu gambar tertentu pada fasilitas tanpa menghapus fasilitas itu sendiri.
      *
-     * Multi-gambar disimpan pada tabel relasi facility_photos (satu baris per foto).
-     * Method menerima photo_id untuk menemukan record yang tepat, menghapus file fisik
-     * di disk public (public/images), lalu menghapus record dari database.
+     * Dukungan input (salah satu wajib ada):
+     *  - photo_id   : ID record pada tabel relasi facility_photos
+     *  - image_path : string path gambar yang persis sama dengan photo_path di DB
+     *
+     * Alur: temukan record foto -> hapus file fisik pada disk public (public/images)
+     * -> hapus record dari database -> kembalikan JSON sukses.
      */
     public function destroyImage(Request $request, $facilityId)
     {
         $facility = Facility::findOrFail($facilityId);
 
-        $photo = FacilityPhoto::where('facility_id', $facility->id)
-            ->findOrFail($request->input('photo_id'));
+        $photoId = $request->input('photo_id');
+        $imagePath = trim((string) $request->input('image_path', ''));
+
+        if ($photoId) {
+            $photo = FacilityPhoto::where('facility_id', $facility->id)
+                ->findOrFail($photoId);
+        } elseif ($imagePath !== '') {
+            $candidates = collect([
+                trim($imagePath, '/'),
+                $imagePath,
+                preg_replace('#^images/#', '', $imagePath),
+                'images/' . ltrim($imagePath, '/'),
+            ])->filter()->unique()->values()->all();
+
+            $photo = FacilityPhoto::where('facility_id', $facility->id)
+                ->whereIn('photo_path', $candidates)
+                ->first();
+
+            if (!$photo) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gambar tidak ditemukan pada fasilitas ini.',
+                ], 404);
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Parameter photo_id atau image_path wajib dikirim.',
+            ], 422);
+        }
 
         if ($photo->photo_path) {
-            $fullPath = public_path('images/' . ltrim($photo->photo_path, '/'));
-            if (is_file($fullPath)) {
-                \Illuminate\Support\Facades\File::delete($fullPath);
+            $cleanPath = preg_replace('#^images/#', '', ltrim($photo->photo_path, '/'));
+            if (Storage::disk('public')->exists($cleanPath)) {
+                Storage::disk('public')->delete($cleanPath);
             }
         }
 

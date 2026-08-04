@@ -94,9 +94,9 @@
                     <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.5rem;">Foto Tersimpan</label>
                     <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;">
                         @foreach($facility->photos as $photo)
-                        <div class="gallery-item" data-id="{{ $photo->id }}" style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg);">
+                        <div class="gallery-item" data-id="{{ $photo->id }}" data-path="{{ $photo->photo_path }}" style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg);">
                             <img src="{{ $photo->photo_url }}" alt="" style="width:100%;height:100%;object-fit:cover;">
-                            <button class="gallery-del" data-id="{{ $photo->id }}" title="Hapus foto" style="position:absolute;top:5px;right:5px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,0.55);border:none;color:#fff;font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'"><i class="fas fa-times"></i></button>
+                            <button type="button" class="gallery-del" data-id="{{ $photo->id }}" data-path="{{ $photo->photo_path }}" title="Hapus foto" style="position:absolute;top:5px;right:5px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,0.55);border:none;color:#fff;font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'"><i class="fas fa-times"></i></button>
                         </div>
                         @endforeach
                     </div>
@@ -152,7 +152,9 @@ function previewGalleryPhotos(event) {
         var btn = e.target.closest('.gallery-del');
         if (!btn) return;
         e.stopPropagation();
+        e.preventDefault();
         var id = btn.dataset.id;
+        var path = btn.dataset.path;
         var item = btn.closest('.gallery-item');
 
         if (typeof Swal !== 'undefined') {
@@ -167,32 +169,37 @@ function previewGalleryPhotos(event) {
                 cancelButtonText: 'Batal'
             }).then(function(result) {
                 if (!result.isConfirmed) return;
-                deletePhoto(item, id);
+                deletePhoto(item, id, path);
             });
         } else {
             if (!confirm('Hapus foto ini?')) return;
-            deletePhoto(item, id);
+            deletePhoto(item, id, path);
         }
     });
 
-    function deletePhoto(item, photoId) {
-        fetch('{{ url('/admin/facilities') }}/' + facilityId + '/delete-image', {
+    function deletePhoto(item, photoId, imagePath) {
+        fetch('{{ route('admin.facilities.delete-image', ':id') }}'.replace(':id', facilityId), {
             method: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': csrf,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ photo_id: photoId })
+            body: JSON.stringify({ photo_id: photoId, image_path: imagePath })
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.success) {
                 item.remove();
-                if (typeof Swal !== 'undefined' && Swal.isVisible()) Swal.fire({ title: 'Terhapus!', text: data.message, icon: 'success', timer: 1500, showConfirmButton: false });
+                if (typeof Swal !== 'undefined') Swal.fire({ title: 'Terhapus!', text: data.message, icon: 'success', timer: 1500, showConfirmButton: false });
+            } else {
+                alert(data.message || 'Gagal menghapus foto.');
             }
         })
-        .catch(function() { alert('Gagal menghapus foto.'); });
+        .catch(function(err) {
+            console.error(err);
+            alert('Gagal menghapus foto.');
+        });
     }
 })();
 
